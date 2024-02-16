@@ -76,7 +76,7 @@ class ArbolBinarioBusqueda:
 def main():
     print(valles("DDDUUUUDDDUU"))
     arbol = ArbolBinarioBusqueda()
-    valores = [1,5,8,9,6]
+    valores = [1,4,7,9,8]
     for valor in valores:
         arbol.insertar(valor)
     print(arbol.preorden())
