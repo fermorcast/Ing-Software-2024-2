@@ -171,5 +171,5 @@ if __name__ == '__main__':
         #fer.ap_mat = "Baeza"
         #db.session.commit()
         #Delete
-        borra_alumno(313320679)
-        print("Borrado con éxito!")
+        #borra_alumno(313320679)
+        #print("Borrado con éxito!")
