@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, Boolean,ForeingKey
+from sqlalchemy import Column, Integer, DateTime, Boolean,ForeignKey
 
 from alchemyClasses import db
 
@@ -6,8 +6,8 @@ class Renta(db.Model):
 
     __tablename__ = 'renta'
     id_rentar = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    id_usuario = Column(Integer, ForeingKey('usuario.id_usuario'), nullable=False,)  
-    id_pelicula = Column(Integer, ForeingKey('pelicula.ide_pelicula', nullable=False)) 
+    id_usuario = Column(Integer, ForeignKey('usuario.id_usuario'), nullable=False,)  
+    id_pelicula = Column(Integer, ForeignKey('pelicula.ide_pelicula'), nullable=False) 
     fecha_renta = Column(DateTime, nullable=False)  
     dias_de_renta = Column(Integer, default=5)
     estatus =  Column(Boolean, default=False)
@@ -16,6 +16,7 @@ class Renta(db.Model):
         self.id_usuario = id_usuario
         self.id_pelicula = id_pelicula
         self.fecha_renta = fecha_renta
+        self.dias_de_renta = dias_de_renta
         self.estatus = estatus
 
     def __str__(self):

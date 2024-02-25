@@ -9,11 +9,11 @@ Repositorio oficial de la materia de Ingenieria de Software de la Facultad de Ci
 - Erick Martínez Piza
 - Rogelio Alcantar Arenas
 
-##ALumno:
+Alumno:
 
 - Moreno Castro Fernanda - 319128727
 
-##Explicación:
+Explicación:
 
 En script1.py. tenemos que ocupo pymysql y las funciones como conectar la base de datos, como genarar un id valido para el usuario y las peliculas, generar nombres, insertar los registros, filtrar por apellidos, cambiar genero de peliculas, eliminar rentas antiguas.
 

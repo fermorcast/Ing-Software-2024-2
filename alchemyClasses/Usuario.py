@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, String, Large_Binary
+from sqlalchemy import Column, Integer, String, Boolean, String, LargeBinary
 
 from alchemyClasses import db
 
@@ -11,7 +11,7 @@ class Usuario(db.Model):
     ap_mat = Column(String(200))
     password = Column(String(64), nullable=False)
     email = Column(String(500), unique=True, nullable=None)
-    profile_picture = Column(Large_Binary)
+    profile_picture = Column(LargeBinary)
     super_user = Column(Boolean, default=None)
 
     def __init__(self, nombre, ap_pat, ap_mat, password, email, profile_picture, super_user):

@@ -9,7 +9,7 @@ class Pelicula(db.Model):
     nombre = Column(String(200), nullable=False)  
     genero = Column(String(45), default=None)  
     duracion = Column(Integer, default=None)
-    inventario = Column(InterruptedError, nullable=True, default=1)
+    inventario = Column(Integer, nullable=False, default=1)
 
     def __init__(self, nombre, genero, duracion, inventario):
         self.nombre = nombre
