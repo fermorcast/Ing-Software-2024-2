@@ -1,8 +1,10 @@
 from flask import Flask
 from sqlalchemy import and_, or_
-
+from datetime import datetime
 from alchemyClasses import db
-from alchemyClasses.Alumno import Alumno
+from alchemyClasses.Pelicula import Pelicula
+from alchemyClasses.Renta import Renta
+from alchemyClasses.Usuario import Usuario
 from cryptoUtils.CryptoUtils import cipher
 from hashlib import sha256
 
@@ -18,13 +20,142 @@ app.config.from_mapping(
 )
 db.init_app(app)
 
+def ver_tabla(tabla):
+    if tabla == Pelicula:
+        for pelicula in Pelicula.query.all(): # Select * from alumno
+            print(pelicula)
+
+    if tabla == Renta:
+        for renta in Renta.query.all(): # Select * from alumno
+            print(renta)
+
+    if tabla == Usuario:    
+        for usuario in Usuario.query.all: # Select * from alumno
+            print(usuario)   
+
+def filtrar_registro(tabla, id):
+
+    if tabla == Pelicula:
+        for pelicula in Pelicula.query.filter(and_(Pelicula.id == id)): #Un booleano a evaluar.
+                print(f"Pelicula es:  {pelicula.__str__()}")
+
+    if tabla == Renta:  
+        for renta in Renta.query.filter(and_(Renta.id_rentar == id)): #Un booleano a evaluar.
+                print(f"Renta es:  {renta.__str__()} ")
+
+    if tabla == Usuario:     
+        for usuario in Usuario.query.filter(and_(Usuario.id_usuario == id)): #Un booleano a evaluar.
+                print(f"Usuario es:  {usuario.__str__()}")
+
+    
+def actualizar(tabla, nombre, id):
+
+    if tabla == Pelicula:
+        pelicula = Pelicula.query.filter(Pelicula.id == id).first()
+        pelicula.nombre = nombre
+        db.session.commit()
+        
+    if tabla == Usuario:
+        usuario = Usuario.query.filter(Usuario.id_usuario == id).first()
+        usuario.nombre = nombre
+        db.session.commit()
+
+    if tabla == Renta:   
+        renta = Renta.query.filter(Renta.id_rentar == id).first()
+        renta.fecha_renta = datetime.today()
+        db.session.commit()
+        
+
+def eliminar_registro(tabla, id=None):
+    if tabla == Pelicula:
+        if id:
+            registro = db.session.query(Pelicula).filter_by(id=id).first()
+            if registro:
+                rentas = db.session.query(Renta).filter.by(Renta.id_pelicula == id).all()
+                for renta in rentas: 
+                    db.session.delete(renta) 
+                db.session.delete(registro)
+                db.session.commit()
+                print("Registro eliminado correctamente.")
+            else:
+                print("No se encontró ningún registro con ese ID.")
+        else:
+            db.session.query(Pelicula).delete()
+            db.session.query(Renta).delete()
+            db.session.commit()
+            print("Todos los registros han sido eliminados.")
+
+    if tabla == Usuario:
+        if id:
+            registro = db.session.query(Usuario).filter_by(id=id).first()
+            if registro:
+                rentas = db.session.query(Renta).filter.by(Renta.id_usuario== id).all()
+                for renta in rentas: 
+                    db.session.delete(renta) 
+                db.session.delete(registro)
+                db.session.commit()
+                print("Registro eliminado correctamente.")
+            else:
+                print("No se encontró ningún registro con ese ID.")
+        else:
+            db.session.query(Renta).delete()
+            db.session.query(Usuario).delete()
+            db.session.commit()
+            print("Todos los registros han sido eliminados.")
+
+    if tabla == Renta:   
+        if id:
+            registro = db.session.query(Renta).filter_by(id=id).first()
+            if registro:
+                db.session.delete(registro)
+                db.session.commit()
+                print("Registro eliminado correctamente.")
+            else:
+                print("No se encontró ningún registro con ese ID.")
+        else:
+            db.session.query(Renta).delete()
+            db.session.commit()
+            print("Todos los registros han sido eliminados.")
+
+def menu_principal():
+    while True:
+        print("\nMenú:")
+        print("1. Ver registros de una tabla")
+        print("2. Filtrar registros por ID")
+        print("3. Actualizar registro")
+        print("4. Eliminar registro")
+        print("5. Salir")
+
+        opcion = input("Ingrese el número de opción: ")
+
+        if opcion == "1":
+            tabla = input("Ingrese el nombre de la tabla (pelicula, usuario o renta): ")
+            ver_tabla(tabla.capitalize())
+
+        elif opcion == "2":
+            tabla = input("Ingrese el nombre de la tabla (pelicula, usuario o renta): ")
+            id = input("Ingrese el ID del registro a filtrar: ")
+            filtrar_registro(tabla.capitalize(), id)
+
+        elif opcion == "3":
+            tabla = input("Ingrese el nombre de la tabla (pelicula, usuario o renta): ")
+            id = input("Ingrese el ID del registro a actualizar: ")
+            nombre = input("Ingrese el nuevo nombre (deje en blanco si no desea actualizar): ")
+            fecha = input("Ingrese la nueva fecha (deje en blanco si no desea actualizar): ")
+            actualizar(tabla.capitalize(), nombre, id)
+
+        elif opcion == "4":
+            tabla = input("Ingrese el nombre de la tabla (pelicula, usuario o renta): ")
+            id = input("Ingrese el ID del registro a eliminar (deje en blanco para eliminar todos los registros): ")
+            eliminar_registro(tabla.capitalize(), id)
+        elif opcion == "5":
+            break
+        else:
+            print("Opción inválida. Por favor, ingrese un número del 1 al 5.")
+            
 if __name__ == '__main__':
     with app.app_context():
-        """for alumno in Alumno.query.all(): # Select * from alumno
-            print(alumno)"""
-
-        """for alumno in Alumno.query.filter(and_(Alumno.nombre == 'Fer', Alumno.num_cta == 313320679)): #Un booleano a evaluar.
-            print(f"Nombre de alumno con cta 313320679 es: {alumno.nombre}")"""
+        menu_principal()
 
         #Create
         """valeria = Alumno('Valeria', 'Ramirez', 319311918, apMat=None, password=sha256(cipher("Developer123#")).hexdigest())
