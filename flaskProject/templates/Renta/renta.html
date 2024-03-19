@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Rentas</title>
+    <style>
+        body {
+            background-color: #ffdab0; /* Fondo color naranja pastel */
+            padding: 20px; /* Espaciado alrededor del cuerpo */
+        }
+
+        h1, h2 {
+            margin-bottom: 20px; /* Espaciado entre títulos */
+        }
+
+        form {
+            margin-bottom: 30px; /* Espaciado bajo el formulario */
+        }
+
+        label {
+            display: block; /* Mostrar cada etiqueta en una línea */
+            margin-bottom: 10px; /* Espaciado bajo cada etiqueta */
+        }
+
+        input[type="number"],
+        input[type="date"] {
+            width: calc(15% - 22px); /* Ancho de los campos de número y fecha */
+            padding: 8px; /* Espaciado dentro de los campos de entrada */
+            margin-bottom: 20px; /* Espaciado bajo cada campo de entrada */
+            box-sizing: border-box; /* Incluir relleno y borde en el ancho total */
+        }
+
+        select {
+            width: calc(15% - 22px); /* Ancho del campo de selección */
+            padding: 8px; /* Espaciado dentro del campo de selección */
+            margin-bottom: 20px; /* Espaciado bajo el campo de selección */
+            box-sizing: border-box; /* Incluir relleno y borde en el ancho total */
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px; /* Espaciado dentro del botón */
+            background-color: #ffffff; /* Color de fondo blanco */
+            border: none; /* Quitar borde */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+            margin-left: 10px; /* Espaciado a la izquierda del botón */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #b0c4de; /* Color de fondo azul pastel claro al pasar el mouse */
+        }
+
+        ul {
+            margin-top: 20px; /* Espaciado sobre la lista de rentas */
+        }
+
+        li {
+            margin-bottom: 10px; /* Espaciado bajo cada elemento de la lista */
+        }
+
+        button {
+            padding: 10px 20px; /* Espaciado dentro del botón */
+            background-color: #ffffff; /* Color de fondo blanco */
+            border: none; /* Quitar borde */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+            margin-left: 10px; /* Espaciado a la izquierda del botón */
+        }
+
+        button:hover {
+            background-color: #b0c4de; /* Color de fondo azul pastel claro al pasar el mouse */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CRUD de Rentas</h1>
+
+    <!-- Formulario para agregar renta -->
+    <h2>Agregar Renta</h2>
+    <form action="{{ url_for('renta.agregar_rentas') }}" method="POST">
+        <label for="idUsuario">ID Usuario:</label>
+        <input type="number" id="idUsuario" name="idUsuario" required><br>
+        <label for="idPelicula">ID Película:</label>
+        <input type="number" id="idPelicula" name="idPelicula" required><br>
+        <label for="fecha_renta">Fecha de Renta:</label>
+        <input type="date" id="fecha_renta" name="fecha_renta" required><br>
+        <label for="dias_de_renta">Días de Renta:</label>
+        <input type="number" id="dias_de_renta" name="dias_de_renta" required min="0"><br>
+        <label for="estatus">Estatus:</label>
+        <select id="estatus" name="estatus">
+            <option value="rentada">Rentada</option>
+            <option value="devuelta">Devuelta</option>
+        </select><br>
+        <button type="submit">Agregar Renta</button>
+    </form>
+    <a href="{{ url_for('renta.ver_rentas')}}"> <button>Volver</button></button> </a>
+
+    <!-- Lista de rentas -->
+    <h2>Lista de Rentas</h2>
+    <ul id="listaRentas"></ul>
+    <table>
+      <thead>
+        <tr>
+          <th>ID de Renta</th>
+          <th>ID de Usuario</th>
+          <th>ID de Película</th>
+          <th>Fecha de Renta</th>
+          <th>Días de Renta</th>
+          <th>Estatus</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for renta in data %}
+        <tr>
+          <td>{{ renta.idRentar }}</td>
+          <td>{{ renta.idUsuario }}</td>
+          <td>{{ renta.idPelicula }}</td>
+          <td>{{ renta.fecha_renta }}</td>
+          <td>{{ renta.dias_de_renta }}</td>
+          <td class="{% if not renta.estatus %}renta-vencida{% endif %}">
+            {% if renta.estatus %}En tiempo{% else %}Vencida{% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('renta.modificar_rentas', idRenta=renta.idRentar) }}">Actualizar</a>
+          </td>
+</tr>
+        {% endfor %}
+      </tbody>
+    </table>
+   
+
+</body>
+</html>

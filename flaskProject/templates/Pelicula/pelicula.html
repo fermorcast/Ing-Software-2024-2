@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Películas</title>
+    <style>
+        body {
+            background-color: #e0b0ff; /* Fondo color morado pastel */
+            padding: 20px; /* Espaciado alrededor del cuerpo */
+        }
+
+        h1, h2 {
+            margin-bottom: 20px; /* Espaciado entre títulos */
+        }
+
+        form {
+            margin-bottom: 30px; /* Espaciado bajo el formulario */
+        }
+
+        label {
+            display: block; /* Mostrar cada etiqueta en una línea */
+            margin-bottom: 10px; /* Espaciado bajo cada etiqueta */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="checkbox"],
+        input[type="number"] {
+            width: calc(20% - 10px); /* Ancho de los campos de texto */
+            padding: 8px; /* Espaciado dentro de los campos de entrada */
+            margin-bottom: 20px; /* Espaciado bajo cada campo de entrada */
+            box-sizing: border-box; /* Incluir relleno y borde en el ancho total */
+        }
+
+        input[type="time"] {
+            width: calc(15% - 22px); /* Ancho de los campos de tiempo */
+            padding: 8px; /* Espaciado dentro de los campos de tiempo */
+            margin-bottom: 20px; /* Espaciado bajo cada campo de tiempo */
+            box-sizing: border-box; /* Incluir relleno y borde en el ancho total */
+        }
+
+        input[type="checkbox"] {
+            width: 25px; /* Ancho del cuadro de selección */
+            height: 25px; /* Altura del cuadro de selección */
+            margin-bottom: 20px; /* Espaciado bajo el cuadro de selección */
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px; /* Espaciado dentro del botón */
+            background-color: #ffffff; /* Color de fondo blanco */
+            border: none; /* Quitar borde */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #b0c4de; /* Color de fondo azul pastel claro al pasar el mouse */
+        }
+
+        ul {
+            margin-top: 20px; /* Espaciado sobre la lista de películas */
+        }
+
+        li {
+            margin-bottom: 10px; /* Espaciado bajo cada elemento de la lista */
+        }
+
+        button {
+            padding: 5px 10px; /* Espaciado dentro del botón */
+            background-color: #ffffff; /* Color de fondo blanco */
+            border: none; /* Quitar borde */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+            margin-left: 10px; /* Espaciado a la izquierda del botón */
+        }
+
+        button:hover {
+            background-color: #b0c4de; /* Color de fondo azul pastel claro al pasar el mouse */
+        }
+
+        .checkbox-label {
+            display: flex; /* Usar flexbox para alinear elementos */
+            align-items: center; /* Alinear elementos verticalmente */
+            margin-bottom: 20px; /* Espaciado bajo la etiqueta del checkbox */
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 30px; /* Ancho del cuadro de selección */
+            height: 30px; /* Altura del cuadro de selección */
+            margin-right: 10px; /* Espaciado a la derecha del cuadro de selección */
+        }
+    </style>
+</head>
+<body>
+  <h1>CRUD de Películas</h1>
+
+  <!-- Formulario para agregar película -->
+  <h2>Agregar Película</h2>
+  <form action="{{ url_for('pelicula.agregar_peliculas') }}" method="post">
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre" required><br>
+    <label for="genero">Género:</label>
+    <input type="text" name="genero" id="genero" required><br>
+    <label for="duracion">Duración:</label>
+    <input type="number" name="duracion" id="duracion" required><br>
+    <label for="inventario">Inventario:</label>
+    <input type="number" name="inventario" id="inventario" required><br>
+    <button type="submit">Agregar Película</button>
+  </form>
+
+  <!-- Lista de películas -->
+  <h2>Lista de Películas</h2>
+  <ul id="listaPeliculas"></ul>
+  <table> -->
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Género</th>
+        <th>Duración</th>
+        <th>Inventario</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pelicula in peliculas %}
+      <tr>
+        <td>{{ pelicula.idPelicula }}</td>
+        <td>{{ pelicula.nombre }}</td>
+        <td>{{ pelicula.genero }}</td>
+        <td>{{ pelicula.duracion }}</td>
+        <td>{{ pelicula.inventario }}</td>
+<td>
+    <button onclick="modificarPelicula('{{ pelicula.idPelicula }}')">Modificar</button>
+
+</td>
+<td>
+          <a href="{{ url_for('pelicula.eliminar_peliculas', id_pelicula=pelicula.idPelicula) }}">Eliminar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <script>
+    function modificarPelicula(idPelicula) {
+        var nombre = prompt("Introduce el nuevo nombre de la película:");
+        var genero = prompt("Introduce el nuevo género de la película:");
+        var duracion = prompt("Introduce la nueva duración de la película:");
+        var inventario = prompt("Introduce el nuevo inventario de la película:");
+
+        if (nombre !== null && genero !== null && duracion !== null && inventario !== null) {
+            // Construir el objeto de datos a enviar al servidor
+            var data = {
+                idPelicula: idPelicula,
+                nombre: nombre,
+                genero: genero,
+                duracion: duracion,
+                inventario: inventario
+            };
+
+            // Realizar la solicitud AJAX al servidor
+            fetch('/pelicula/modificar/' + idPelicula, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Película modificada exitosamente');
+                    // Actualizar la página para mostrar los cambios
+                    window.location.reload();
+                } else {
+                    console.error('Error al modificar la película');
+                }
+            }).catch(error => {
+                console.error('Error al enviar la solicitud AJAX:', error);
+            });
+        }
+    }
+  </script>
+
+</body>
+</html>

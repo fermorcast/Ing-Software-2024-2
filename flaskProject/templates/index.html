@@ -3,8 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <style>
+        body {
+            background-color: #ffd1dc; /* Fondo color rosa pastel */
+        }
+
+        .botones_utilidad {
+            text-align: center; /* Centrar los botones */
+            margin-top: 200px; /* Espacio superior */
+        }
+
+        .main {
+            display: inline-block; /* Mostrar los botones en línea */
+            padding: 20px 40px; /* Espacio alrededor del texto */
+            font-size: 24px; /* Tamaño de fuente más grande */
+            background-color: #ffffff; /* Color de fondo blanco */
+            color: #000000; /* Color de texto negro */
+            text-decoration: none; /* Quitar subrayado */
+            border-radius: 10px; /* Bordes redondeados */
+            margin: 0 10px; /* Espacio entre botones */
+        }
+
+        .main:hover {
+            background-color: #ffb6c1; /* Color de fondo rosa pastel claro al pasar el mouse */
+        }
+
+        h1 {
+            position: absolute; /* Posicionamiento absoluto */
+            top: 20px; /* Distancia desde la parte superior */
+            left: 20px; /* Distancia desde la izquierda */
+            color: #000000; /* Color de texto negro */
+            font-size: 36px; /* Tamaño de fuente más grande */
+        }
+    </style>
 </head>
 <body>
-    <a href="/mpb/html">Regresar</a>
+    <h1>Menú</h1>
+    <div class="botones_utilidad">
+        <a href="/usuario" class="main">Usuarios</a>
+        <a href="/pelicula" class="main">Peliculas</a>
+        <a href="/renta" class="main">Rentas</a>
+    </div>
 </body>
 </html>
