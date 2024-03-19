@@ -28,7 +28,7 @@ def modificar_usuarios(id_usuario):
         usuario = obtener_usuario_por_id(id_usuario)
         return render_template('Usuario/formulario.html', informacion = usuario)
     else:
-        modificar_usuario(request, id_usuario)
+        modificar_usuario(id_usuario, request.get_json())
         return redirect(url_for('usuario.ver_usuarios'))
 
 @usuario_blueprint.route('/agregar', methods=['GET', 'POST'])

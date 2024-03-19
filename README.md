@@ -8,3 +8,17 @@ Repositorio oficial de la materia de Ingenieria de Software de la Facultad de Ci
 - Fernando Fong
 - Erick Martínez Piza
 - Adriana Hernandez Gasca
+
+## Alumno:
+
+Moreno Castro Fernanda - 319128727
+
+sudo systemctl start mariadb.service
+
+sudo mariadb -u root -p
+
+source ./IngSoftLab.sql;
+
+export FLASK_APP=app
+export FLASK_ENV=development
+flask run

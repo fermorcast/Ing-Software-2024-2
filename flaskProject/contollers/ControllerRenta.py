@@ -27,8 +27,10 @@ def modificar_rentas(idRenta):
 @renta_blueprint.route('/agregar', methods=['GET', 'POST'])
 def agregar_rentas():
     if request.method == "GET":
+        print("no debo agregar")
         return render_template('Renta/formulario.html', informacion = None)
     else:
+        print("estoy agre")
         agregar_renta(request)
         return redirect(url_for('renta.ver_rentas'))
   

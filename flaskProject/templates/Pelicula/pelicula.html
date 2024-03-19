@@ -6,21 +6,21 @@
     <title>CRUD de Películas</title>
     <style>
         body {
-            background-color: #e0b0ff; /* Fondo color morado pastel */
-            padding: 20px; /* Espaciado alrededor del cuerpo */
+            background-color: #e0b0ff;
+            padding: 20px;
         }
 
         h1, h2 {
-            margin-bottom: 20px; /* Espaciado entre títulos */
+            margin-bottom: 20px;
         }
 
         form {
-            margin-bottom: 30px; /* Espaciado bajo el formulario */
+            margin-bottom: 30px;
         }
 
         label {
-            display: block; /* Mostrar cada etiqueta en una línea */
-            margin-bottom: 10px; /* Espaciado bajo cada etiqueta */
+            display: block;
+            margin-bottom: 10px;
         }
 
         input[type="text"],
@@ -28,75 +28,69 @@
         input[type="password"],
         input[type="checkbox"],
         input[type="number"] {
-            width: calc(20% - 10px); /* Ancho de los campos de texto */
-            padding: 8px; /* Espaciado dentro de los campos de entrada */
-            margin-bottom: 20px; /* Espaciado bajo cada campo de entrada */
-            box-sizing: border-box; /* Incluir relleno y borde en el ancho total */
+            width: calc(20% - 10px);
+            padding: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
         }
 
         input[type="time"] {
-            width: calc(15% - 22px); /* Ancho de los campos de tiempo */
-            padding: 8px; /* Espaciado dentro de los campos de tiempo */
-            margin-bottom: 20px; /* Espaciado bajo cada campo de tiempo */
-            box-sizing: border-box; /* Incluir relleno y borde en el ancho total */
+            width: calc(15% - 22px);
+            padding: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
         }
 
         input[type="checkbox"] {
-            width: 25px; /* Ancho del cuadro de selección */
-            height: 25px; /* Altura del cuadro de selección */
-            margin-bottom: 20px; /* Espaciado bajo el cuadro de selección */
+            width: 25px;
+            height: 25px;
+            margin-bottom: 20px;
         }
 
-        input[type="submit"] {
-            padding: 10px 20px; /* Espaciado dentro del botón */
-            background-color: #ffffff; /* Color de fondo blanco */
-            border: none; /* Quitar borde */
-            border-radius: 5px; /* Bordes redondeados */
-            cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
+        input[type="submit"],
+        button,
+        a.button {
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            text-decoration: none;
+            color: #000;
+            display: inline-block;
         }
 
-        input[type="submit"]:hover {
-            background-color: #b0c4de; /* Color de fondo azul pastel claro al pasar el mouse */
+        input[type="submit"]:hover,
+        button:hover,
+        a.button:hover {
+            background-color: #b0c4de;
         }
 
         ul {
-            margin-top: 20px; /* Espaciado sobre la lista de películas */
+            margin-top: 20px;
         }
 
         li {
-            margin-bottom: 10px; /* Espaciado bajo cada elemento de la lista */
-        }
-
-        button {
-            padding: 5px 10px; /* Espaciado dentro del botón */
-            background-color: #ffffff; /* Color de fondo blanco */
-            border: none; /* Quitar borde */
-            border-radius: 5px; /* Bordes redondeados */
-            cursor: pointer; /* Cambiar cursor al pasar sobre el botón */
-            margin-left: 10px; /* Espaciado a la izquierda del botón */
-        }
-
-        button:hover {
-            background-color: #b0c4de; /* Color de fondo azul pastel claro al pasar el mouse */
+            margin-bottom: 10px;
         }
 
         .checkbox-label {
-            display: flex; /* Usar flexbox para alinear elementos */
-            align-items: center; /* Alinear elementos verticalmente */
-            margin-bottom: 20px; /* Espaciado bajo la etiqueta del checkbox */
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         .checkbox-label input[type="checkbox"] {
-            width: 30px; /* Ancho del cuadro de selección */
-            height: 30px; /* Altura del cuadro de selección */
-            margin-right: 10px; /* Espaciado a la derecha del cuadro de selección */
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
   <h1>CRUD de Películas</h1>
 
-  <!-- Formulario para agregar película -->
   <h2>Agregar Película</h2>
   <form action="{{ url_for('pelicula.agregar_peliculas') }}" method="post">
     <label for="nombre">Nombre:</label>
@@ -107,13 +101,12 @@
     <input type="number" name="duracion" id="duracion" required><br>
     <label for="inventario">Inventario:</label>
     <input type="number" name="inventario" id="inventario" required><br>
-    <button type="submit">Agregar Película</button>
+    <button type="submit" class="button update-button">Agregar Película</button>
   </form>
 
-  <!-- Lista de películas -->
   <h2>Lista de Películas</h2>
   <ul id="listaPeliculas"></ul>
-  <table> -->
+  <table>
     <thead>
       <tr>
         <th>ID</th>
@@ -132,12 +125,9 @@
         <td>{{ pelicula.genero }}</td>
         <td>{{ pelicula.duracion }}</td>
         <td>{{ pelicula.inventario }}</td>
-<td>
-    <button onclick="modificarPelicula('{{ pelicula.idPelicula }}')">Modificar</button>
-
-</td>
-<td>
-          <a href="{{ url_for('pelicula.eliminar_peliculas', id_pelicula=pelicula.idPelicula) }}">Eliminar</a>
+        <td>
+          <button onclick="modificarPelicula('{{ pelicula.idPelicula }}')" class="button update-button">Modificar</button>
+          <a href="{{ url_for('pelicula.eliminar_peliculas', id_pelicula=pelicula.idPelicula) }}" class="button delete-button">Eliminar</a>
         </td>
       </tr>
       {% endfor %}
@@ -151,7 +141,6 @@
         var inventario = prompt("Introduce el nuevo inventario de la película:");
 
         if (nombre !== null && genero !== null && duracion !== null && inventario !== null) {
-            // Construir el objeto de datos a enviar al servidor
             var data = {
                 idPelicula: idPelicula,
                 nombre: nombre,
@@ -160,7 +149,6 @@
                 inventario: inventario
             };
 
-            // Realizar la solicitud AJAX al servidor
             fetch('/pelicula/modificar/' + idPelicula, {
                 method: 'POST',
                 headers: {
@@ -170,7 +158,6 @@
             }).then(response => {
                 if (response.ok) {
                     console.log('Película modificada exitosamente');
-                    // Actualizar la página para mostrar los cambios
                     window.location.reload();
                 } else {
                     console.error('Error al modificar la película');
@@ -181,6 +168,5 @@
         }
     }
   </script>
-
 </body>
 </html>

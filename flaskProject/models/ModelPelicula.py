@@ -1,5 +1,6 @@
 from alchemyClasses.Pelicula import Pelicula
 from alchemyClasses import db
+from alchemyClasses.Renta import Renta
 
 def agregar_pelicula(informacion):
     nombre = informacion.form.get("nombre")
@@ -22,6 +23,8 @@ def modificar_pelicula(id_pelicula, nueva_informacion):
     db.session.commit()
 
 def eliminar_pelicula(id_pelicula):
+    Renta.query.filter_by(idPelicula=id_pelicula).delete()
+
     pelicula = Pelicula.query.get(id_pelicula)
     db.session.delete(pelicula)
     db.session.commit()

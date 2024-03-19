@@ -2,11 +2,13 @@ from alchemyClasses.Renta import Renta
 from alchemyClasses import db
 
 def agregar_renta(informacion):
-    id_usuario = informacion.form.get("id_usuario")
-    id_pelicula = informacion.form.get("id_pelicula")
-    fecha_renta = informacion.form.get("fecha_de_renta")
+    print("informacion")
+    print(informacion.form)
+    id_usuario = informacion.form.get("idUsuario")
+    id_pelicula = informacion.form.get("idPelicula")
+    fecha_renta = informacion.form.get("fecha_renta")
     dias_de_renta = informacion.form.get("dias_de_renta")
-    estatus = informacion.form.get("estatus")
+    estatus = informacion.form.get("estatus") == "rentada"
 
     nueva_renta = Renta(id_usuario, id_pelicula, fecha_renta, dias_de_renta, estatus)
     db.session.add(nueva_renta)
