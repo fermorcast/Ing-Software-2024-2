@@ -13,3 +13,9 @@ Repositorio oficial de la materia de Ingenieria de Software de la Facultad de Ci
 
 - Moreno Castro Fernanda - 319128727
 
+## Para correrlo:
+
+- cd I.S/Ing-Software-2024-2
+- source env/bin/activate 
+- cd my-app  
+- npm start 
